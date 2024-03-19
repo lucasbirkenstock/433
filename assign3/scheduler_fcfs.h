@@ -22,10 +22,17 @@ private:
 public:
 
     // Readyqueue
-    queue<PCB> readyqueue;
+    deque<PCB> readyqueue;
 
     // process array
     std::vector<PCB> process_array;
+
+    // Statistic variables
+    int avg_turnaround_time = 0;
+    int avg_waiting_time = 0;
+    int current_time = 0;
+    std::vector<int> turnaround_time_arr;
+    std::vector<int> waiting_time_arr;
    
     // Constructor 
     SchedulerFCFS();

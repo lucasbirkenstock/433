@@ -8,21 +8,26 @@
 
 
 #include "scheduler_fcfs.h"
-#include <queue>
+#include <deque>
 #include "pcb.h"
 
 class SchedulerFCFS {
 
 public:
     // Readyqueue
-    queue<PCB> readyqueue;
+    deque<PCB> readyqueue;
 
     // Process array
     std::vector<PCB> process_array;
 
+    
+
     // Statistic variables
     int avg_turnaround_time = 0;
     int avg_waiting_time = 0;
+    int current_time = 0;
+    std::vector<int> turnaround_time_arr;
+    std::vector<int> waiting_time_arr;
 
     // Constructor 
     SchedulerFCFS() {
@@ -47,6 +52,8 @@ public:
      * @brief This function is called once after the simulation ends.
      *        It is used to print out the results of the simulation.
      */
+
+    // Print turnaround + waiting time of EACH process, AND the average turnaround/waiting times
     void print_results() {
 
     }
@@ -56,7 +63,28 @@ public:
      *        It stops when all processes are finished.
      */
     void simulate() {
-        
+        // Copy process array to readyqueue
+        for (PCB process : this->process_array) {
+            readyqueue.push_back(process);
+        }
+
+        while (!readyqueue.empty()) {
+            // Copy first PCB in RQ and remove it from the queue
+            PCB current_process = readyqueue.front();
+            readyqueue.pop_front();
+
+            // Add to waiting time array before updating variable from burst time
+            waiting_time_arr.push_back(current_time);
+
+            // Add burst time of current process to global time counter
+            current_time += current_process.burst_time;
+
+            // Add to turnaround time array after current_time is updated
+            turnaround_time_arr.push_back((current_time - current_process.arrival_time));
+            
+        }
+
+
     }
 
 };
