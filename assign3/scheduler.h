@@ -18,12 +18,10 @@ using namespace std;
  * @brief This is the base class for the scheduler.
  */
 class Scheduler {
-    // Process array
-    std::vector<PCB> process_array;
 public:
     // Process array
     std::vector<PCB> process_array;
-    
+
     /**
      * @brief Construct a new Scheduler object
      */
