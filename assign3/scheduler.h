@@ -1,7 +1,7 @@
 /**
 * Assignment 3: CPU Scheduler
  * @file scheduler.h
- * @author ??? (TODO: your name)
+ * @author Lucas Birkenstock, Connor Toro
  * @brief This is the header file for the base Scheduler class. Specific schedulers, e.g. FCFS, SJF and RR, inherit
  *        this base class.
  * @version 0.1
@@ -18,7 +18,12 @@ using namespace std;
  * @brief This is the base class for the scheduler.
  */
 class Scheduler {
+    // Process array
+    std::vector<PCB> process_array;
 public:
+    // Process array
+    std::vector<PCB> process_array;
+    
     /**
      * @brief Construct a new Scheduler object
      */
