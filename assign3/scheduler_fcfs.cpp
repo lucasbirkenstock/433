@@ -6,26 +6,14 @@
  * @version 0.1
  */
 
+// TO TEST: ./fcfs schedule.txt
 
 #include "scheduler_fcfs.h"
 #include <deque>
 #include "pcb.h"
 
 
-    // Readyqueue
-    deque<PCB> readyqueue;
-
-    // Process array
-    std::vector<PCB> process_array;
-
     
-
-    // Statistic variables
-    int avg_turnaround_time = 0;
-    int avg_waiting_time = 0;
-    int current_time = 0;
-    std::vector<int> turnaround_time_arr;
-    std::vector<int> waiting_time_arr;
 
     // Constructor 
     SchedulerFCFS::SchedulerFCFS() {
@@ -66,6 +54,9 @@
             readyqueue.push_back(process);
         }
 
+        // Process number for printing results
+        int proc_num = 1;
+
         while (!readyqueue.empty()) {
             // Copy first PCB in RQ and remove it from the queue
             PCB current_process = readyqueue.front();
@@ -80,6 +71,8 @@
             // Add to turnaround time array after current_time is updated
             turnaround_time_arr.push_back((current_time - current_process.arrival_time));
             
+            std::cout << "T" << proc_num << " turn-around time = " << turnaround_time_arr.back() << ", waiting time = " << waiting_time_arr.back() << endl;
+            proc_num++;
         }
 
 
