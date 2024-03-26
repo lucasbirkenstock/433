@@ -13,3 +13,26 @@
 
 // TODO: add implementation of SchedulerRR constructor, destrcutor and 
 // member functions init, print_results, and simulate here
+
+    // Constructor
+    SchedulerRR::SchedulerRR(int time_quantum) {
+        // TODO default time quantum of 10 may need to be reiterated here
+
+    }
+
+    // Destructor 
+    SchedulerRR::~SchedulerRR() {
+
+    }
+
+    void SchedulerRR::init(std::vector<PCB>& process_list) {
+
+    }
+
+    void SchedulerRR::print_results() {
+
+    }
+
+    void SchedulerRR::simulate() {
+
+    }

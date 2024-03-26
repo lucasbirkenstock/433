@@ -13,3 +13,26 @@
 
 // TODO: add implementation of SchedulerPriority constructor, destrcutor and 
 // member functions init, print_results, and simulate here
+
+
+// Constructor
+SchedulerPriority::SchedulerPriority() {
+
+}
+
+// Destructor 
+SchedulerPriority::~SchedulerPriority() {
+
+}
+
+ void SchedulerPriority::init(std::vector<PCB>& process_list) {
+
+ }
+
+void SchedulerPriority::print_results() {
+
+}
+
+void SchedulerPriority::simulate() {
+    
+}
