@@ -17,16 +17,13 @@
  * @brief This Scheduler class implements the FCFS scheduling algorithm.
  */
 class SchedulerFCFS : public Scheduler {
-private:
-    // TODO: add necessary member variables here for your implementation
-
 public:
 
     // Readyqueue
     deque<PCB> readyqueue;
 
     // process array
-    std::vector<PCB> process_array;
+    //std::vector<PCB> process_array; // removed for cpp check
 
     // Statistic variables
     double avg_turnaround_time = 0.00;

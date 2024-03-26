@@ -30,6 +30,8 @@
      *        It is used to initialize the scheduler.
      * @param process_list The list of processes in the simulation.
      */
+
+    // Initialize member variable array to function input
     void SchedulerFCFS::init(std::vector<PCB>& process_list){
         process_array = process_list;
     };
@@ -75,6 +77,7 @@
         // Process number for printing results
         int proc_num = 1;
 
+        // While queue isn't empty:
         while (!readyqueue.empty()) {
             // Copy first PCB in RQ and remove it from the queue
             PCB current_process = readyqueue.front();
