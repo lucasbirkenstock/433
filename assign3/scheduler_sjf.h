@@ -18,6 +18,12 @@ private:
     // TODO: add necessary member variables here for your implementation
 
 public:
+    double total_turnaround_time = 0.00;
+    double total_waiting_time = 0.00;
+    int turnaround_time = 0;
+    int waiting_time = 0;
+
+    std::vector<PCB> sorted_list;
     /**
      * @brief Construct a new SchedulerSJF object
      */
@@ -43,5 +49,7 @@ public:
      *        It stops when all processes are finished.
      */
     void simulate() override;
+
+    static bool compare_pcb(PCB pcb_a, PCB pcb);
 };
 #endif //ASSIGN3_SCHEDULER_SJF_H
