@@ -29,8 +29,8 @@ public:
     std::vector<PCB> process_array;
 
     // Statistic variables
-    int avg_turnaround_time = 0;
-    int avg_waiting_time = 0;
+    double avg_turnaround_time = 0.00;
+    double avg_waiting_time = 0.00;
     int current_time = 0;
     std::vector<int> turnaround_time_arr;
     std::vector<int> waiting_time_arr;

@@ -41,7 +41,14 @@
 
     // Print turnaround + waiting time of EACH process, AND the average turnaround/waiting times
     void SchedulerFCFS::print_results() {
+        // Calculate
+        for (int val : waiting_time_arr) {
+            avg_waiting_time += val;
+        }
 
+        avg_waiting_time = avg_waiting_time / waiting_time_arr.size();
+        // Print
+        cout << "Average turn-around time = " << 0 << ", Average waiting time = " << avg_waiting_time << endl;
     }
 
     /**
