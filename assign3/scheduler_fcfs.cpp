@@ -11,9 +11,7 @@
 #include <deque>
 #include "pcb.h"
 
-class SchedulerFCFS {
 
-public:
     // Readyqueue
     deque<PCB> readyqueue;
 
@@ -30,12 +28,12 @@ public:
     std::vector<int> waiting_time_arr;
 
     // Constructor 
-    SchedulerFCFS() {
+    SchedulerFCFS::SchedulerFCFS() {
 
     }
    
     // Destructor 
-    ~SchedulerFCFS() {
+    SchedulerFCFS::~SchedulerFCFS() {
 
     }
 
@@ -44,7 +42,7 @@ public:
      *        It is used to initialize the scheduler.
      * @param process_list The list of processes in the simulation.
      */
-    void init(std::vector<PCB>& process_list){
+    void SchedulerFCFS::init(std::vector<PCB>& process_list){
         process_array = process_list;
     };
 
@@ -54,7 +52,7 @@ public:
      */
 
     // Print turnaround + waiting time of EACH process, AND the average turnaround/waiting times
-    void print_results() {
+    void SchedulerFCFS::print_results() {
 
     }
 
@@ -62,7 +60,7 @@ public:
      * @brief This function simulates the scheduling of processes in the ready queue.
      *        It stops when all processes are finished.
      */
-    void simulate() {
+    void SchedulerFCFS::simulate() {
         // Copy process array to readyqueue
         for (PCB process : this->process_array) {
             readyqueue.push_back(process);
@@ -86,5 +84,3 @@ public:
 
 
     }
-
-};

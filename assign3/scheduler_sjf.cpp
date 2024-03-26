@@ -12,3 +12,26 @@
 
 // TODO: add implementation of SchedulerSJF constructor, destrcutor and 
 // member functions init, print_results, and simulate here
+
+
+        // Constructor
+        SchedulerSJF::SchedulerSJF() {
+
+        }
+
+        // Destructor
+        SchedulerSJF::~SchedulerSJF() {
+
+        }
+
+        void SchedulerSJF::init(std::vector<PCB>& process_list) {
+
+        }
+
+        void SchedulerSJF::print_results() {
+
+        }
+
+        void SchedulerSJF::simulate() {
+            
+        }

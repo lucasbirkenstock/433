@@ -12,6 +12,7 @@
 #define ASSIGN3_SCHEDULER_FCFS_H
 
 #include "scheduler.h"
+#include <deque>
 /**
  * @brief This Scheduler class implements the FCFS scheduling algorithm.
  */
