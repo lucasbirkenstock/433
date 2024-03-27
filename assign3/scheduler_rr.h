@@ -12,12 +12,21 @@
 #define ASSIGN3_SCHEDULER_RR_H
 
 #include "scheduler.h"
+#include <list>
+#include <map>
 
 class SchedulerRR : public Scheduler {
 private:
     // TODO: add necessary member variables here for your implementation
 
 public:
+    long unsigned int num_done = 0;
+    unsigned int tq;
+    int time = 0;
+    double total_turnaround_time = 0.00;
+    double total_waiting_time = 0.00;
+    std::list<PCB> pcb_list;
+    std::map<string, int> time_map;
     /**
      * @brief Construct a new SchedulerRR object
      */
