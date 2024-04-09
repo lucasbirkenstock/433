@@ -17,9 +17,18 @@ typedef int buffer_item;
  */
 class Buffer {
 private:
-    // TODO: Add your implementation of the buffer class here
+
+    // Indices of out/in
+    int out;
+    int in;
+
+    int num_elements = 0;
 
 public:
+
+    // Actual buffer array
+    buffer_item* data;
+
     /**
      * @brief Construct a new Buffer object
      * @param size the size of the buffer
