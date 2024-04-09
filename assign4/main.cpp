@@ -10,6 +10,7 @@
 #include <iostream>
 #include "buffer.h"
 #include <unistd.h>
+#include <pthread.h>
 
 using namespace std;
 
@@ -56,7 +57,17 @@ void *consumer(void *param) {
 
 int main(int argc, char *argv[]) {
     /* TODO: 1. Get command line arguments argv[1],argv[2],argv[3] */
+    if (argc == 4) {
+        //------------------------------- TODO may need to convert these to int --------------------------
+        char* sleep_time = argv[1]; // How long main thread sleeps before terminating (seconds)
+        char* num_producers = argv[2]; 
+        char* num_consumers = argv[3]; 
+    } else {
+        // Print error if there is an incorrect number of inputs
+        std::cerr << "Usage" << argv[0] << " <arg1> <arg2> <arg3>" << std::endl;
+    }
     /* TODO: 2. Initialize buffer and synchronization primitives */
+    Buffer theBuffer = Buffer(5);
     /* TODO: 3. Create producer thread(s).
      * You should pass an unique int ID to each producer thread, starting from 1 to number of threads */
     /* TODO: 4. Create consumer thread(s) */
