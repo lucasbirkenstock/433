@@ -76,6 +76,7 @@ void Buffer::print_buffer() {
     while (index != in - 1) {
         // Print everything except the last filled element
         std::cout << data[index] << ", ";
+        index++;
     }
 
     // Print last element
