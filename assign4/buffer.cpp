@@ -11,17 +11,58 @@
 #include <iostream>
 
 
-// Constructor 
+// Constructor
 Buffer::Buffer(int size) {
     // Initialize out/in, and create data array to be sized of the input
     this->out = 0;
     this->in = 0;
+    this->size = size;
     this->data = new buffer_item[size];
 }
 
-// Destructor 
+// Destructor
 Buffer::~Buffer() {
     delete[] data;
+}
+
+//copy constructor
+Buffer::Buffer(const Buffer& other) {
+    // Copy size and allocate memory
+    size = other.size;
+    data = new buffer_item[size];
+
+    // Copy elements
+    for (int i = 0; i < size; ++i) {
+        data[i] = other.data[i];
+    }
+
+    // Copy other attributes
+    in = other.in;
+    out = other.out;
+    num_elements = other.num_elements;
+}
+
+//operator=
+Buffer& Buffer::operator=(const Buffer& other) {
+    if (this != &other) {  // Check for self-assignment
+        // Delete existing data
+        delete[] data;
+
+        // Copy size and allocate memory
+        size = other.size;
+        data = new buffer_item[size];
+
+        // Copy elements
+        for (int i = 0; i < size; ++i) {
+            data[i] = other.data[i];
+        }
+
+        // Copy other attributes
+        in = other.in;
+        out = other.out;
+        num_elements = other.num_elements;
+    }
+    return *this;
 }
 
 bool Buffer::insert_item(buffer_item item) {
@@ -30,10 +71,10 @@ bool Buffer::insert_item(buffer_item item) {
     if (!is_full()) {
         // Insert the element at in, increment in, return true;
         data[in] = item;
-        in = (in + 1) % get_count();
+        in = (in + 1) % size;
         num_elements++;
         return true;
-    } else { 
+    } else {
         // If buffer is full, return false.
         return false;
     }
@@ -41,14 +82,14 @@ bool Buffer::insert_item(buffer_item item) {
 
  bool Buffer::remove_item(buffer_item *item) {
     if (is_empty()) {
-        return false; 
+        return false;
     }
 
-    //buffer_item removed_item = data[out];
-    out = (out + 1) % get_count();
+    *item = data[out];
+    out = (out + 1) % size;
     num_elements--;
     return true;
-    
+
  }
 
 
@@ -61,7 +102,7 @@ bool Buffer::is_empty() {
 
 // Buffer is full if in is one slot behind out
 bool Buffer::is_full() {
-    return (((in + 1) % get_count()) == out);
+    return (((in + 1) % size) == out);
 }
 
 int Buffer::get_count() {
@@ -69,16 +110,15 @@ int Buffer::get_count() {
 }
 
 void Buffer::print_buffer() {
+    if(is_empty()) return;
     std::cout << "Buffer[";
+    int index = 0;
 
-    int index = out;
-
-    while (index != in - 1) {
-        // Print everything except the last filled element
+    for(int i = 0; i < num_elements-1; i++) {
+        index = (out + i)%size;
         std::cout << data[index] << ", ";
-        index++;
     }
 
     // Print last element
-    std::cout << data[++index] << "]" << std::endl;
+    std::cout << data[(index+1)%size] << "]" << std::endl;
 }

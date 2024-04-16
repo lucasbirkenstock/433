@@ -21,7 +21,7 @@ private:
     // Indices of out/in
     int out;
     int in;
-
+    int size;
     int num_elements = 0;
 
 public:
@@ -29,6 +29,9 @@ public:
     // Actual buffer array
     buffer_item* data;
 
+
+    Buffer& operator=(const Buffer& other);
+    Buffer(const Buffer& other);
     /**
      * @brief Construct a new Buffer object
      * @param size the size of the buffer

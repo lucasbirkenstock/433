@@ -11,6 +11,7 @@
 #include "buffer.h"
 #include <unistd.h>
 #include <pthread.h>
+#include <semaphore.h>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ using namespace std;
 Buffer buffer;
 
 pthread_mutex_t mutex;
+sem_t empty;
+sem_t full;
 
 // Producer thread function
 void *producer(void *param) {
@@ -27,11 +30,21 @@ void *producer(void *param) {
 
     while (true) {
         /* sleep for a random period of time */
-        usleep(rand()%1000000);
+        //cout << "Producer " << item << ": sleeping..." << endl;
+        usleep(rand() % 1000000 + 1);
+        //cout << "Producer " << item << ": woke up!" << endl;
         // TODO: Add synchronization code here
 
+        //wait until room in buffer
+        //cout << "Producer " << item << ": Waiting for full semaphore" << endl;
+        sem_wait(&full);
+        //cout << "Producer " << item << ": passed full semaphore" << endl;
+
         // Lock the thread
+        //cout << "Producer " << item << ": Waiting for mutex lock" << endl;
         pthread_mutex_lock(&mutex);
+        //cout << "Producer " << item << ": Mutex locked" << endl;
+
         //
         if (buffer.insert_item(item)) {
             cout << "Producer " << item << ": Inserted item " << item << endl;
@@ -40,34 +53,42 @@ void *producer(void *param) {
             cout << "Producer error condition"  << endl;    // shouldn't come here
         }
 
-        
+        // Unlock the thread
+        pthread_mutex_unlock(&mutex);
+
+        //signal filled slot
+        sem_post(&empty);
     }
-    // Unlock the thread
-    pthread_mutex_unlock(&mutex);
 }
 
 // Consumer thread function
 void *consumer(void *param) {
     buffer_item item;
+    int id = *((int *)param);
 
     while (true) {
         /* sleep for a random period of time */
-        usleep(rand() % 1000000);
-        // TODO: Add synchronization code here
+        usleep(rand() % 1000000 + 1);
+
+        // wait while empty
+        sem_wait(&empty);
 
         // Lock the thread
         pthread_mutex_lock(&mutex);
 
         if (buffer.remove_item(&item)) {
-            cout << "Consumer " << item << ": Removed item " << item << endl;
+            cout << "Consumer " << id << ": Removed item " << item << endl;
             buffer.print_buffer();
         } else {
-            cout << "Consumer error condition" << endl;    // shouldn't come here
+            cout << "Consumer: " << id << " error condition" << endl;    // shouldn't come here
         }
-    }
 
-    // Unlock the thread
-    pthread_mutex_unlock(&mutex);
+        // Unlock the thread
+         pthread_mutex_unlock(&mutex);
+
+        //increment full semaphore
+        sem_post(&full);
+    }
 }
 
 int main(int argc, char *argv[]) {
@@ -75,11 +96,13 @@ int main(int argc, char *argv[]) {
     if (argc == 4) {
         int sleep_time = std::stoi(argv[1]);    // How long main thread sleeps before terminating (seconds)
         int num_producers = std::stoi(argv[2]); // Convert input to int
-        int num_consumers = std::stoi(argv[3]); // Convert input to int 
+        int num_consumers = std::stoi(argv[3]); // Convert input to int
 
         /* TODO: 2. Initialize buffer and synchronization primitives */
         Buffer theBuffer = Buffer(5);
         pthread_mutex_init(&mutex, NULL);
+        sem_init(&empty, 0, 0);
+        sem_init(&full, 0, 5);
 
         /* TODO: 3. Create producer thread(s).
         * You should pass an unique int ID to each producer thread, starting from 1 to number of threads */
@@ -88,7 +111,8 @@ int main(int argc, char *argv[]) {
         pthread_t producer_threads[num_producers];
 
         for (int i = 1; i <= num_producers; ++i) {
-
+            int* id = new int(i);
+            pthread_create(&producer_threads[i - 1], NULL, producer, (void *)id);
         }
 
 
@@ -102,7 +126,8 @@ int main(int argc, char *argv[]) {
             // NULL specifies default thread attributes
             // Point to consumer function
             // Idk the last one
-            pthread_create(&consumer_threads[i - 1], NULL, consumer, (void *)&i);
+            int* id = new int(i);
+            pthread_create(&consumer_threads[i - 1], NULL, consumer, (void *)id);
         }
         /* 5. Main thread sleep */
         sleep(sleep_time);
@@ -112,7 +137,7 @@ int main(int argc, char *argv[]) {
         // Print error if there is an incorrect number of inputs
         std::cerr << "Usage" << argv[0] << " <arg1> <arg2> <arg3>" << std::endl;
     }
-    
+
 
     /* TODO: 6. Exit */
     exit(0);
