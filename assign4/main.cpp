@@ -17,6 +17,8 @@ using namespace std;
 // global buffer object
 Buffer buffer;
 
+pthread_mutex_t mutex;
+
 // Producer thread function
 // TODO: Add your implementation of the producer thread here
 void *producer(void *param) {
@@ -28,13 +30,21 @@ void *producer(void *param) {
         /* sleep for a random period of time */
         usleep(rand()%1000000);
         // TODO: Add synchronization code here
+
+        // Lock the thread
+        pthread_mutex_lock(&mutex);
+        //
         if (buffer.insert_item(item)) {
             cout << "Producer " << item << ": Inserted item " << item << endl;
             buffer.print_buffer();
         } else {
             cout << "Producer error condition"  << endl;    // shouldn't come here
         }
+
+        
     }
+    // Unlock the thread
+    pthread_mutex_unlock(&mutex);
 }
 
 // Consumer thread function
@@ -46,6 +56,10 @@ void *consumer(void *param) {
         /* sleep for a random period of time */
         usleep(rand() % 1000000);
         // TODO: Add synchronization code here
+
+        // Lock the thread
+        pthread_mutex_lock(&mutex);
+
         if (buffer.remove_item(&item)) {
             cout << "Consumer " << item << ": Removed item " << item << endl;
             buffer.print_buffer();
@@ -53,6 +67,8 @@ void *consumer(void *param) {
             cout << "Consumer error condition" << endl;    // shouldn't come here
         }
     }
+    // Unlock the thread
+    pthread_mutex_unlock(&mutex);
 }
 
 int main(int argc, char *argv[]) {
