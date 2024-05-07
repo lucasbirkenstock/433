@@ -118,7 +118,11 @@ int main(int argc, char *argv[]) {
     lifo.print_statistics();
 
     std::cout << "****************Simulate LRU replacement****************************" << std::endl;
-    // TODO: Add your code to calculate number of page faults using LRU replacement algorithm
-    // TODO: print the statistics and run-time
+    LRUReplacement lru(num_pages, num_frames);
+    for(int addr : large_refs) {
+        int page_num = addr >> page_offset_bits;
+        lru.access_page(page_num, 0);
+    }
+    lru.print_statistics();
 
 }

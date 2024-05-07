@@ -13,6 +13,7 @@
 // Remember to add comments to your code
 
 #include "replacement.h"
+#include <map>
 
 /**
  * @brief A class to simulate the least recently used (LRU) page replacement algorithm.
@@ -20,14 +21,15 @@
 class LRUReplacement : public Replacement
 {
 	// TODO: Add your implementation to this class
+    map<int, int> lru_map;
 public:
 	/**
 	 * @brief Constructor
-	 * @param num_pages 
-	 * @param num_frames 
+	 * @param num_pages
+	 * @param num_frames
 	 */
 	LRUReplacement(int num_pages, int num_frames);
-	
+
     /**
     * @brief Destructor
     */
@@ -35,7 +37,7 @@ public:
 
     /**
      * @brief Accesss a page alreay in physical memory
-     * It may be overridden in a subclass 
+     * It may be overridden in a subclass
      * @param page_num The logical page number.
      */
     virtual void touch_page(int page_num);

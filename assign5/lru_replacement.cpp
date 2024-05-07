@@ -9,6 +9,7 @@
 // Remember to add sufficient and clear comments to your code
 
 #include "lru_replacement.h"
+#include <iostream>
 
 // TODO: Add your implementation here
 LRUReplacement::LRUReplacement(int num_pages, int num_frames)
@@ -24,18 +25,39 @@ LRUReplacement::~LRUReplacement()
 }
 
 // Accesss a page alreay in physical memory
-void LRUReplacement::touch_page(int page_num)
-{
-    // TODO: Update your data structure LRU replacement
+void LRUReplacement::touch_page(int page_num) {
+    touches++;
+    lru_map[page_num] = touches + num_faults + num_replacements;
 }
 
 // Access an invalid page, but free frames are available
 void LRUReplacement::load_page(int page_num) {
-    // TODO: Update your data structure LRU replacement and pagetable
+    num_faults++;
+    page_table[page_num] = PageEntry(num_frames-frames_left, true, false);
+    lru_map[page_num] = touches + num_faults + num_replacements;
+    frames_left--;
 }
 
 // Access an invalid page and no free frames are available
 int LRUReplacement::replace_page(int page_num) {
-    // TODO: Update your data structure LRU replacement and pagetable
-    return 0;
+    num_replacements++;
+    lru_map[page_num] = touches + num_faults + num_replacements;
+
+    //find lru element in map (find key with smallest value)
+    int lru = 999999999;
+    int victim = -1;
+    for (auto it = lru_map.begin(); it != lru_map.end(); ++it) {
+        if (it->second < lru) {
+            victim = it->first;
+            lru = it->second;
+        }
+    }
+    if(victim == -1) return 0;
+    lru_map.erase(victim);
+    int victim_frame = page_table[victim].frame_num;
+    page_table[victim].valid = false;
+    page_table[page_num] = PageEntry(victim_frame, true, false);
+
+    return victim;
 }
+
