@@ -30,6 +30,12 @@ public:
 	bool valid = false;
     // dirty bit represents whether a page is changed
     bool dirty = false;
+
+    PageEntry(int fn, bool val, bool dir) {
+        frame_num = fn;
+        valid = val;
+        dirty = dir;
+    }
 };
 
 

@@ -13,12 +13,12 @@
 // TODO: Add your implementation of PageTable
 // Constrcutor
 // TODO: Add your code
-PageTable::PageTable(int num_pages) {
+PageTable::PageTable(int num_pages) : pages(num_pages, PageEntry(-1, false, false)){
     
 }
 
 // Destructor
 // TODO: Add your code
 PageTable::~PageTable() {
-    
+
 }

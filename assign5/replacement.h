@@ -22,10 +22,10 @@ protected:      // subclasses can access these members
     // Member variable for the page table
     PageTable page_table;
 	// TODO: Add additional member variables to this class
-	
+
 public:
 	/**
-	 * @brief 
+	 * @brief
 	 * @param num_pages Total number of logical pages for the simulation.
 	 * @param num_frames Total number of available free frames.
 	 */
@@ -37,9 +37,14 @@ public:
     virtual ~Replacement();
 
 	// TODO: Add additional member variables and functions if needed
+    int num_frames;
+    int num_faults;
+    int num_replacements;
+    int frames_left;
+    int touches;
     /**
 	 * @brief Simulate a single page access.
-     * @details If the page is valid, it calls the touch_page function. 
+     * @details If the page is valid, it calls the touch_page function.
      *          If the page is not valid but free frames are available, it calls the load_page function.
      *          If the page is not valid and there is no free frame, it calls the replace_page function.
      * @param page_num The logical page number.
@@ -50,7 +55,7 @@ public:
 
     /**
 	 * @brief Accesss a page alreay in physical memory
-	 * It may be overridden in a subclass 
+	 * It may be overridden in a subclass
 	 * @param page_num The logical page number.
      */
     virtual void touch_page(int page_num) {}
@@ -58,7 +63,7 @@ public:
     /**
      * @brief Access an invalid page, but free frames are available.
      * Assign the page to an available frame, not replacement needed
-     * It may be overridden in a subclass 
+     * It may be overridden in a subclass
      * @param page_num The logical page number.
      */
     virtual void load_page(int page_num) {}
