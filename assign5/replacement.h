@@ -1,12 +1,11 @@
 /**
 * Assignment 5: Page replacement algorithms
  * @file replacement.h
- * @author ??? (TODO: your name)
+ * @author Lucas Birkenstock, Connor Toro
  * @brief A base class for different page replacement algorithms.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+
 #pragma once
 
 #include "pagetable.h"
@@ -21,7 +20,7 @@ class Replacement
 protected:      // subclasses can access these members
     // Member variable for the page table
     PageTable page_table;
-	// TODO: Add additional member variables to this class
+	
 
 public:
 	/**
@@ -36,7 +35,7 @@ public:
      */
     virtual ~Replacement();
 
-	// TODO: Add additional member variables and functions if needed
+	
     int num_frames;
     int num_faults;
     int num_replacements;

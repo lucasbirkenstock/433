@@ -1,12 +1,11 @@
 /**
 * Assignment 5: Page replacement algorithms
  * @file pagetable.h
- * @author ??? (TODO: your name)
+ * @author Lucas Birkenstock, Connor Toro
  * @brief This class represents a traditional pagetable data structure.
  * @version 0.1
  */
-//You must complete the all parts marked as "TODO". Delete "TODO" after you are done.
-// Remember to add sufficient and clear comments to your code
+
 
 #pragma once
 
